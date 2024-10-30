@@ -1,82 +1,98 @@
 //Write a c++ program to implement ATM management system.
 #include<iostream>
+#include<string>
 using namespace std;
-class ATM{
-private:
-    long long ac_no=132534298709;
-    int balance=1246379;
-    char name[10]="Swarnendu";
-    int pin=12345;
-    void withdraw(){
-        int amt;
-        cout<<"Amount to be withdrew is:";
-        cin>>amt;
-        balance-=amt;
-        cout<<"The amount is withdrawn."<<endl;
-    }
-    void transfer(){
-        int amt;
-        cout<<"Amount to be transferred is:";
-        cin>>amt;
-        int ch;
-        cout<<"1.Credit"<<endl<<"2.Debit"<<endl<<"Your Choice:";
-        cin>>ch;
-        switch(ch) {
-            case 1:
-                balance+=amt;
-                cout<<"\nThe amount is credited."<<endl;
-                break;
-            case 2:
-                balance-=amt;
-                cout<<"\nThe amount is debited."<<endl;
-                break;
-            default:
-                cout<<"\nERROR!"<<endl;
-        }
-    }
-    void viewbalance(){
-        cout<<"The Final balance is:"<<balance<<endl;
-    }
-public:
-    void pin_(){
-        int p;
-        cout<<"Enter pin:";
-        cin>>p;
-        l1:
-        if(p==pin){
-            while(1) {
-                int c;
-                cout<<"1.Withdraw"<<endl<<"2.View Balance"<<endl<<"3.Transfer"<<endl<<"4.Exit"<<endl<<"Enter Choice:";
-                cin>>c;
-                switch(c) {
-                    case 1:
-                        withdraw();
+class Account{
+	private:
+		double ownerPin=1234;
+		string ac_no = "1234567";
+		string name="Mario";
+		double balance=1000.00;
+	void withdraw(double wd_amount){
+		balance -=wd_amount;
+	}
+	void viewBalance(){
+		cout << "Account Name: " << name << endl;
+		cout << "Account No: " << ac_no << endl;
+		cout << "your balance is : " << balance << endl;
+	}
+	void transfer(){
+		double recptACno=978654;
+						double acctotrans;
+						cout << "enter the acc no to transfer : ";
+						cin >> acctotrans;
+						
+						if(acctotrans == recptACno){
+							double wd_amount;
+						cout << "enter your transfer amount: ";
+            			cin >> wd_amount;
+            			if(wd_amount > balance){
+            				cout << "Insufficient funds";
+						}if(wd_amount<=balance){
+							withdraw(wd_amount);
+//							viewBalance();
+						}
+						}
+						if(acctotrans == 1234567){
+							double in_amount;
+						cout << "enter your deposit amount: ";
+            			cin >> in_amount;
+            			balance+=in_amount;
+            		}
+						else if(acctotrans != recptACno && acctotrans != 1234567 ){
+							cout << "invalid Acc";
+						}
+	}
+	public:
+		void  pin(){
+		double pin;
+		cout << "enter your pin: ";
+		cin >> pin;
+		int ch;
+       
+		if(pin == ownerPin){
+			
+                
+          while(ch != 4){
+          cout << "\nATM Menu:" << endl;
+                cout << "1. View Balance" << endl;
+                cout << "2. Withdraw" << endl;
+                cout << "3. Transfer" << endl;
+                cout << "4. Exit" << endl;
+                cout << "Enter your choice: ";
+                cin >> ch;
+          	  switch(ch){
+            	case 1: viewBalance();
+            			break;
+            	case 2: double wd_amount;
+						cout << "enter your Withdraw amount: ";
+            			cin >> wd_amount;
+            			if(wd_amount > balance){
+            				cout << "Insufficient funds";
+						}else{
+							withdraw(wd_amount);
+//							viewBalance();
+						}
+						break;
+				case 3: {
+					
+		            transfer();
+						break;
+				}
+				case 4: cout << "Exiting..." << endl;
                         break;
-                    case 2:
-                        viewbalance();
-                        break;
-                    case 3:
-                        transfer();
-                        break;
-                    case 4:
-                        cout<<"END!";
-                        exit(0);
-                    default:
-                        cout<<"ERROR!"<<endl;
-                }
-            }
-        }
-        else{
-            cout<<"Wrong pin. Try again!";
-            goto l1;
-        }
-    }
-    void display(){
-        cout<<"Account number:"<<ac_no<<endl<<"Name:"<<name<<endl;
-    }
+						
+				default: cout << "Invalid input";
+						 break;
+			}
+		  }
+		}else{
+			cout << "invalid pin";
+		}
+			
+	}
 };
 int main(){
-    ATM a;
-    a.display();
-    a.pin_();
+	Account obj;
+	obj.pin();
 }
